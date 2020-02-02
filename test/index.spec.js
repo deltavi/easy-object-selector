@@ -223,5 +223,10 @@ suite('easy-object-selector', function () {
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
     });
+    test('has(obj, "b.*.x") should return false', function () {
+      const res = selector.has(obj, "b.*.x");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, false);
+    });
   });
 });

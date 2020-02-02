@@ -81,5 +81,9 @@ exports.select = function (obj, selector, defValue) {
 /**
  */
 exports.has = function (obj, selector) {
-	return !!exports.select(obj, selector);
+    var res = exports.select(obj, selector);
+    if(res && Object.prototype.toString.call(res) == "[object Array]"){
+        return res.length > 0;
+    }
+	return !!res;
 };
