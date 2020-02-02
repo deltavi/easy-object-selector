@@ -1,0 +1,10 @@
+{
+    "esversion": 6,
+    "strict": "global",
+    "node": true,
+    "predef": [
+        "suite",
+        "test"
+    ],
+    "unused": true
+}

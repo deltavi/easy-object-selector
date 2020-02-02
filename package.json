@@ -1,0 +1,39 @@
+{
+  "name": "easy-object-selector",
+  "version": "1.0.0",
+  "description": "Utility to get a property from nested object using simple 'a.b.c' paths",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --ui tdd test",
+    "test:examples": "mocha --ui tdd test/examples.spec.js",
+    "doc": "documentation readme index.js --section=API"
+  },
+  "author": "Vincenzo De Vivo <info@vincenzodevivo.com>",
+  "homepage": "https://github.com/deltavi/easy-object-selector",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/deltavi/easy-object-selector.git"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "easy",
+    "object",
+    "select",
+    "selector",
+    "utility",
+    "prop",
+    "props",
+    "property",
+    "properties"
+  ],
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "mocha-jshint": "^2.3.1",
+    "documentation": "^8.0.2"
+  },
+  "dependencies": {}
+}
