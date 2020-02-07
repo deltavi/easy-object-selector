@@ -1,6 +1,6 @@
 {
   "name": "easy-object-selector",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Utility to get a property from nested object using simple 'a.b.c' paths",
   "main": "index.js",
   "scripts": {

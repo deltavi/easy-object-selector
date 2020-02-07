@@ -211,6 +211,11 @@ suite('easy-object-selector', function () {
       assert.equal(res[0], 1);
       assert.equal(res[1], 2);
     });
+    test('select(obj,  "a.*.b.a") should return []', function () {
+      const res = selector.select({a:[{b:1}]},  "a.*.b.a");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 0);
+    });
   });
   suite('#has()', function () {
     test('has(obj, "b.0.v") should return true', function () {
@@ -227,6 +232,39 @@ suite('easy-object-selector', function () {
       const res = selector.has(obj, "b.*.x");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
+    });
+    test('has(obj,  "a.*.b.a") should return false', function () {
+      const res = selector.has({a:[{b:1}]},  "a.*.b.a");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, false);
+    });
+  });
+  const wrapper = selector.wrap(obj);
+  suite('#wrap(obj)', function () {
+    test('wrapper.get(obj, "b.0.v") should return 1', function () {
+        const res = wrapper.get("b.0.v");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, 1);
+    });
+    test('wrapper.get(obj, "b.0.x") should return undefined', function () {
+        const res = wrapper.get("b.0.x");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, undefined);
+    });
+    test('wrapper.get(obj, "b.0.x", "def") should return "def"', function () {
+        const res = wrapper.get("b.0.x", "def");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, "def");
+    });
+    test('wrapper.has(obj, "b.0.v") should return true', function () {
+        const res = wrapper.has("b.0.v");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, true);
+    });
+    test('wrapper.has(obj, "b.0.x") should return false', function () {
+        const res = wrapper.has("b.0.x");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, false);
     });
   });
 });
