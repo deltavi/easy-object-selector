@@ -53,6 +53,16 @@ suite('easy-object-selector', function () {
       assert.equal(res[0], 'val2');
       assert.equal(res[1], 'val3');
      });
+    test('select(obj, "a.d.first().e"); // => "val2"', function () {
+        const res = select(obj, "a.d.first().e");
+        //console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, 'val2');
+    });
+    test('select(obj, "a.d.last().e"); // => "val3"', function () {
+        const res = select(obj, "a.d.last().e");
+        //console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res, 'val3');
+    });
 
     // wrapper
     test('wrapper.get("a.b.c"); // => "val1"', function () {

@@ -32,6 +32,8 @@ select(obj, "a.b.c"); // => "val1"
 select(obj, "a.b.x", "defValue"); // => "defValue"
 select(obj, "a.d.0.e"); // => "val2"
 select(obj, "a.d.*.e"); // => ["val2", "val3"]
+select(obj, "a.d.first().e"); // => "val2"
+select(obj, "a.d.last().e"); // => "val3"
 
 const has = selector.has;
 has(obj, "a.b.c"); // => true
@@ -101,6 +103,8 @@ select(obj, "a.b.x", "defValue"); // => "defValue"
 select(obj, "a.d.0.e"); // => "val2"
 select(obj, "a.d.1.e"); // => "val3"
 select(obj, "a.d.*.e"); // => ["val2", "val3"]
+select(obj, "a.d.first().e"); // => "val2"
+select(obj, "a.d.last().e"); // => "val3"
 ```
 
 Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** 
@@ -200,6 +204,8 @@ wrapper.get("a.b.x", "defValue"); // => "defValue"
 wrapper.get("a.d.0.e"); // => "val2"
 wrapper.get("a.d.1.e"); // => "val3"
 wrapper.get("a.d.*.e"); // => ["val2", "val3"]
+wrapper.get("a.d.first().e"); // => "val2"
+wrapper.get("a.d.last().e"); // => "val3"
 ```
 
 Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** 

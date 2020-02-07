@@ -30,6 +30,8 @@
  * select(obj, "a.d.0.e"); // => "val2"
  * select(obj, "a.d.1.e"); // => "val3"
  * select(obj, "a.d.*.e"); // => ["val2", "val3"]
+ * select(obj, "a.d.first().e"); // => "val2"
+ * select(obj, "a.d.last().e"); // => "val3"
  */
 exports.select = function (obj, selector, defValue) {
 	//console.log("selector: " + selector);
@@ -173,6 +175,8 @@ function ObjectWrapper(obj){
  * wrapper.get("a.d.0.e"); // => "val2"
  * wrapper.get("a.d.1.e"); // => "val3"
  * wrapper.get("a.d.*.e"); // => ["val2", "val3"]
+ * wrapper.get("a.d.first().e"); // => "val2"
+ * wrapper.get("a.d.last().e"); // => "val3"
  */
 ObjectWrapper.prototype.get = function(selector, defValue){
 	return exports.select(this.obj, selector, defValue);
