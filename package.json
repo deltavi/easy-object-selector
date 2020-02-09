@@ -35,5 +35,6 @@
     "mocha-jshint": "^2.3.1",
     "documentation": "^8.0.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "runkitExampleFilename": "runkit-example.js"
 }
