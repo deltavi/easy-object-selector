@@ -1,4 +1,3 @@
-'use strict';
 const _s = require("easy-object-selector");
 const obj = {
      a: {
