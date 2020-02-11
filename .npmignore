@@ -1,9 +1,9 @@
-.idea
-test
+.idea/
+test/
 .gitignore
 .jshintignore
 .jshintrc
-.vscode
+.vscode/
 .travis.yml
 .npmignore
-docs
+docs/
