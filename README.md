@@ -2,11 +2,24 @@
 
 ![easy-object-selector](http://www.vincenzodevivo.com/lab/npm-badges/npm-badge.php?name=easy-object-selector)
 
-Utility to get a property from nested object using simple 'a.b.c' paths
+Utility to get a property from nested object using simple 'a.b.c' paths (dot–notation).
 
 ## Install
 
     npm install easy-object-selector
+
+
+
+
+## Paths
+
+| Path     | Description |
+|:---------|:------------|
+| a.b.c    |  The value of 'c' |
+| a.d.1.e  |  The second value of 'e' |
+| a.d.*.e  |  All values of 'e' |
+| a.d.first().e | The first value of 'e' | 
+| a.d.last().e |  The last value of 'e' |
 
 ## Examples
 
