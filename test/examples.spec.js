@@ -2,19 +2,19 @@
 const assert = require('assert');
 const selector = require('../index');
 const obj = {
-    a: {
-        b: {
-            c: "val1"
-        },
-        d: [
-            {
-                e: "val2"
-            },
-            {
-                e: "val3"
-            }
-        ]
-    }
+  a: {
+    b: {
+      c: "val1"
+    },
+    d: [
+      {
+        e: "val2"
+      },
+      {
+        e: "val3"
+      }
+    ]
+  }
 };
 const wrapper = selector.wrap(obj);
 const select = selector.select;
@@ -52,23 +52,23 @@ suite('easy-object-selector', function () {
       assert.equal(res.length, 2);
       assert.equal(res[0], 'val2');
       assert.equal(res[1], 'val3');
-     });
+    });
     test('select(obj, "a.d.first().e"); // => "val2"', function () {
-        const res = select(obj, "a.d.first().e");
-        //console.info("=>" + JSON.stringify(res, null, 4));
-        assert.equal(res, 'val2');
+      const res = select(obj, "a.d.first().e");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, 'val2');
     });
     test('select(obj, "a.d.last().e"); // => "val3"', function () {
-        const res = select(obj, "a.d.last().e");
-        //console.info("=>" + JSON.stringify(res, null, 4));
-        assert.equal(res, 'val3');
+      const res = select(obj, "a.d.last().e");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, 'val3');
     });
 
     // wrapper
     test('wrapper.get("a.b.c"); // => "val1"', function () {
-       const res = wrapper.get("a.b.c");
-       //console.info("=>" + JSON.stringify(res, null, 4));
-       assert.equal(res, "val1");
+      const res = wrapper.get("a.b.c");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, "val1");
     });
   });
   suite('#has()', function () {
@@ -77,7 +77,7 @@ suite('easy-object-selector', function () {
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, true);
     });
-     test('has(obj, "a.b.x"); // => false', function () {
+    test('has(obj, "a.b.x"); // => false', function () {
       const res = has(obj, "a.b.x");
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);

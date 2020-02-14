@@ -43,7 +43,7 @@ exports.select = function (obj, selector, defValue) {
 	var objType;
 	var objKeys;
 	var part;
-	var parts = selector.split(".");
+	var parts = Array.isArray(selector) ? selector : selector.split(".");
 	var n;
 	for (var i = 0; i < parts.length; i++) {
 		part = parts[i];
@@ -66,9 +66,8 @@ exports.select = function (obj, selector, defValue) {
 						tmpObj = [];
 						parts = parts.slice(i + 1);
 						if (parts.length > 0) {
-							selector = parts.join(".");
 							for (n = 0; n < obj.length; n++) {
-								tmpObj2 = exports.select(obj[n], selector, defValue);
+								tmpObj2 = exports.select(obj[n], parts, defValue);
 								if (tmpObj2 || tmpObj2 == 0) {
 									tmpObj.push(tmpObj2);
 								}
@@ -84,10 +83,9 @@ exports.select = function (obj, selector, defValue) {
 						tmpObj = [];
 						parts = parts.slice(i + 1);
 						if (parts.length > 0) {
-							selector = parts.join(".");
 							objKeys = Object.keys(obj);
 							for (n = 0; n < objKeys.length; n++) {
-								tmpObj2 = exports.select(obj[objKeys[n]], selector, defValue);
+								tmpObj2 = exports.select(obj[objKeys[n]], parts, defValue);
 								if (tmpObj2 || tmpObj2 == 0) {
 									tmpObj.push(tmpObj2);
 								}
@@ -128,22 +126,22 @@ exports.select = function (obj, selector, defValue) {
  *
  */
 exports.has = function (obj, selector) {
-    var res = exports.select(obj, selector);
-    if(res && Object.prototype.toString.call(res) == "[object Array]"){
-        return res.length > 0;
-    }
+	var res = exports.select(obj, selector);
+	if (res && Object.prototype.toString.call(res) == "[object Array]") {
+		return res.length > 0;
+	}
 	return !!res;
 };
 
- //TODO: https://github.com/documentationjs/documentation/blob/068005eeba3093515aaa1536e4e43b0139f24b4a/__tests__/fixture/html/nested.input.js
-  
+//TODO: https://github.com/documentationjs/documentation/blob/068005eeba3093515aaa1536e4e43b0139f24b4a/__tests__/fixture/html/nested.input.js
+
 /**
  * @description Object wrapper
  * @class
  * @param {Object} obj object to wrap
  */
-function ObjectWrapper(obj){
-  this.obj = obj;  
+function ObjectWrapper(obj) {
+	this.obj = obj;
 }
 
 /**
@@ -178,7 +176,7 @@ function ObjectWrapper(obj){
  * wrapper.get("a.d.first().e"); // => "val2"
  * wrapper.get("a.d.last().e"); // => "val3"
  */
-ObjectWrapper.prototype.get = function(selector, defValue){
+ObjectWrapper.prototype.get = function (selector, defValue) {
 	return exports.select(this.obj, selector, defValue);
 };
 
@@ -199,7 +197,7 @@ ObjectWrapper.prototype.get = function(selector, defValue){
  * wrapper.has("a.b.c"); // => true
  * wrapper.has("a.b.x"); // => false
  */
-ObjectWrapper.prototype.has = function(selector){
+ObjectWrapper.prototype.has = function (selector) {
 	return exports.has(this.obj, selector);
 };
 
@@ -220,5 +218,5 @@ ObjectWrapper.prototype.has = function(selector){
  * wrapper.get("a.b.c"); // => "val1"
  */
 exports.wrap = function (obj) {
-   return new ObjectWrapper(obj);
+	return new ObjectWrapper(obj);
 };
