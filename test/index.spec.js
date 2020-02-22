@@ -89,6 +89,11 @@ suite('easy-object-selector', function () {
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, "ccc");
     });
+    test('select(obj, ["c", "a", "b", "c"]) should return "ccc"', function () {
+      const res = selector.select(obj, ["c", "a", "b", "c"]);
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, "ccc");
+    });
     test('select(obj, "c.z.b.c") should return undefined', function () {
       const res = selector.select(obj, "c.z.b.c");
       console.info("=>" + JSON.stringify(res, null, 4));
@@ -223,6 +228,11 @@ suite('easy-object-selector', function () {
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, true);
     });
+    test('has(obj, ["b", 0, "v"]) should return true', function () {
+      const res = selector.has(obj, ["b", 0, "v"]);
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, true);
+    });
     test('has(obj, "b.1.v") should return false', function () {
       const res = selector.has(obj, "b.1.v");
       console.info("=>" + JSON.stringify(res, null, 4));
@@ -239,32 +249,71 @@ suite('easy-object-selector', function () {
       assert.equal(res, false);
     });
   });
+  suite('#put()', function () {
+    test('put({}, "a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
+      const res = selector.put({}, "a.b.c", "val1");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+    });
+    test('put({}, ["a", "b", "c"], "val1") should return {a:{b:{c:"val1"}}}', function () {
+      const res = selector.put({}, ["a", "b", "c"], "val1");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+    });
+    test('put({a:1}, "a.b.c", "val1") should return an exception', function () {
+      expect(function () {
+        const res = selector.put({ a: 1 }, "a.b.c", "val1");
+        console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res.a.b.c, "val1");
+      }).throw("Cannot create property 'b' on number '1'");
+    });
+    test('put({z:1}, "a.b.c", "val1") should return {a:{b:{c:"val1"}}, z:1}', function () {
+      const res = selector.put({ z: 1 }, "a.b.c", "val1");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+      assert.equal(res.z, 1);
+    });
+    test('const o = {}; put(o, "a.b.c", "val1"); put(o, "a.d.f", "val2"); should return {a:{b:{c:"val1"}, d:{f:"val2"}}}', function () {
+      const o = {}; 
+      selector.put(o, "a.b.c", "val1");
+      const res =  selector.put(o, "a.d.f", "val2");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+      assert.equal(res.a.d.f, "val2");
+    });
+  });
   const wrapper = selector.wrap(obj);
   suite('#wrap(obj)', function () {
-    test('wrapper.get(obj, "b.0.v") should return 1', function () {
+    test('wrapper.get("b.0.v") should return 1', function () {
       const res = wrapper.get("b.0.v");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, 1);
     });
-    test('wrapper.get(obj, "b.0.x") should return undefined', function () {
+    test('wrapper.get("b.0.x") should return undefined', function () {
       const res = wrapper.get("b.0.x");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, undefined);
     });
-    test('wrapper.get(obj, "b.0.x", "def") should return "def"', function () {
+    test('wrapper.get("b.0.x", "def") should return "def"', function () {
       const res = wrapper.get("b.0.x", "def");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, "def");
     });
-    test('wrapper.has(obj, "b.0.v") should return true', function () {
+    test('wrapper.has("b.0.v") should return true', function () {
       const res = wrapper.has("b.0.v");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, true);
     });
-    test('wrapper.has(obj, "b.0.x") should return false', function () {
+    test('wrapper.has("b.0.x") should return false', function () {
       const res = wrapper.has("b.0.x");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
+    });
+    test('wrapper.put("a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
+      const wrapper = selector.wrap({});
+      const res = wrapper.put("a.b.c", "val1");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
     });
   });
 });

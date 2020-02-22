@@ -1,11 +1,11 @@
 'use strict';
 
 /**
- * Get selected property value if it exists.
+ * Get the value of the selected property if it exists.
  * @param {Object} obj source object
- * @param {String} selector selector
- * @param {Object|String|Number|Boolean} defValue default value
- * @returns {Object|String|Number|Boolean|undefined}
+ * @param {String|Array} selector selector
+ * @param {Object|Array|String|Number|Boolean} defValue default value
+ * @returns {Object|Array|String|Number|Boolean|undefined}
  * @example
  * const selector = require("easy-object-selector");
  * const select = selector.select;
@@ -25,6 +25,7 @@
  *      }
  * };
  * select(obj, "a.b.c"); // => "val1"
+ * select(obj, ["a", "b", "c"]); // => "val1"
  * select(obj, "a.b.x"); // => undefined
  * select(obj, "a.b.x", "defValue"); // => "defValue"
  * select(obj, "a.d.0.e"); // => "val2"
@@ -51,7 +52,7 @@ exports.select = function (obj, selector, defValue) {
 		//console.log("tmpObj: ", tmpObj);
 		if (!tmpObj) {
 			objType = Object.prototype.toString.call(obj);
-			if (objType == "[object Array]") {
+			if (objType === "[object Array]") {
 				switch (part) {
 					// last
 					case "last()": {
@@ -68,7 +69,7 @@ exports.select = function (obj, selector, defValue) {
 						if (parts.length > 0) {
 							for (n = 0; n < obj.length; n++) {
 								tmpObj2 = exports.select(obj[n], parts, defValue);
-								if (tmpObj2 || tmpObj2 == 0) {
+								if (tmpObj2 || tmpObj2 === 0) {
 									tmpObj.push(tmpObj2);
 								}
 							}
@@ -77,7 +78,7 @@ exports.select = function (obj, selector, defValue) {
 						return obj;
 					}
 				}
-			} else if (objType == "[object Object]") {
+			} else if (objType === "[object Object]") {
 				switch (part) {
 					case "*": {
 						tmpObj = [];
@@ -86,7 +87,7 @@ exports.select = function (obj, selector, defValue) {
 							objKeys = Object.keys(obj);
 							for (n = 0; n < objKeys.length; n++) {
 								tmpObj2 = exports.select(obj[objKeys[n]], parts, defValue);
-								if (tmpObj2 || tmpObj2 == 0) {
+								if (tmpObj2 || tmpObj2 === 0) {
 									tmpObj.push(tmpObj2);
 								}
 							}
@@ -109,7 +110,7 @@ exports.select = function (obj, selector, defValue) {
 /**
  * Check if the selected property exists.
  * @param {Object} obj source object
- * @param {String} selector selector
+ * @param {String|Array} selector selector
  * @returns {Boolean}
  * @example
  * const selector = require("easy-object-selector");
@@ -122,15 +123,46 @@ exports.select = function (obj, selector, defValue) {
  *      }
  * };
  * has(obj, "a.b.c"); // => true
+ * has(obj, ["a", "b", "c"]); // => true
  * has(obj, "a.b.x"); // => false
- *
  */
 exports.has = function (obj, selector) {
 	var res = exports.select(obj, selector);
-	if (res && Object.prototype.toString.call(res) == "[object Array]") {
+	if (res && Array.isArray(res)) {
 		return res.length > 0;
 	}
 	return !!res;
+};
+
+/**
+ * Put the value in the object property.
+ * @param {Object} obj source object
+ * @param {String|Array} selector selector
+ * @param {Object|Array|String|Number|Boolean} value value
+ * @returns {Object}
+ * @example
+ * const selector = require("easy-object-selector");
+ * const put = selector.put;
+ * put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
+ * put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}
+ */
+exports.put = function (obj, selector, value) {
+	if (!obj) {
+		return;
+	}
+	var tmpObj = obj;
+	var part;
+	var parts = Array.isArray(selector) ? selector : selector.split(".");
+	for (var i = 0; i < parts.length; i++) {
+		part = parts[i];
+		if(i === parts.length - 1){
+			obj[part] = value;
+		} else if(!obj[part]){
+			obj[part] = {};
+		}
+		obj = obj[part];
+	}
+	return tmpObj;
 };
 
 //TODO: https://github.com/documentationjs/documentation/blob/068005eeba3093515aaa1536e4e43b0139f24b4a/__tests__/fixture/html/nested.input.js
@@ -145,10 +177,10 @@ function ObjectWrapper(obj) {
 }
 
 /**
- * Get selected property value if it exists.
- * @param {String} selector selector
- * @param {Object|String|Number|Boolean} defValue default value
- * @returns {Object|String|Number|Boolean|undefined}
+ * Get the value of the selected property if it exists.
+ * @param {String|Array} selector selector
+ * @param {Object|Array|String|Number|Boolean} defValue default value
+ * @returns {Object|Array|String|Number|Boolean|undefined}
  * @example
  * const selector = require("easy-object-selector");
  * const obj = {
@@ -168,6 +200,7 @@ function ObjectWrapper(obj) {
  * };
  * const wrapper = selector.wrap(obj);
  * wrapper.get("a.b.c"); // => "val1"
+ * wrapper.get(["a", "b", "c"]); // => "val1"
  * wrapper.get("a.b.x"); // => undefined
  * wrapper.get("a.b.x", "defValue"); // => "defValue"
  * wrapper.get("a.d.0.e"); // => "val2"
@@ -182,7 +215,7 @@ ObjectWrapper.prototype.get = function (selector, defValue) {
 
 /**
  * Check if the selected property exists.
- * @param {String} selector selector
+ * @param {String|Array} selector selector
  * @returns {Boolean}
  * @example
  * const selector = require("easy-object-selector");
@@ -195,10 +228,25 @@ ObjectWrapper.prototype.get = function (selector, defValue) {
  * };
  * const wrapper = selector.wrap(obj);
  * wrapper.has("a.b.c"); // => true
+ * wrapper.has(["a", "b", "c"]); // => true
  * wrapper.has("a.b.x"); // => false
  */
 ObjectWrapper.prototype.has = function (selector) {
 	return exports.has(this.obj, selector);
+};
+
+/**
+ * Put the value in the object property
+ * @param {String|Array} selector selector
+ * @param {Object|Array|String|Number|Boolean} value value
+ * @returns {Object}
+ * @example
+ * const selector = require("easy-object-selector");
+ * const wrapper = selector.wrap({});
+ * wrapper.put("a.b.c", "val1") // => {a:{b:{c:"val1"}}}
+ */
+ObjectWrapper.prototype.put = function (selector, value) {
+	return exports.put(this.obj, selector, value);
 };
 
 /**
@@ -216,6 +264,7 @@ ObjectWrapper.prototype.has = function (selector) {
  * };
  * const wrapper = selector.wrap(obj);
  * wrapper.get("a.b.c"); // => "val1"
+ * wrapper.get(["a", "b", "c"]); // => "val1"
  */
 exports.wrap = function (obj) {
 	return new ObjectWrapper(obj);

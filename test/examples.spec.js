@@ -26,6 +26,11 @@ suite('easy-object-selector', function () {
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, "val1");
     });
+    test('select(obj, ["a", "b", "c"]); // => "val1"', function () {
+      const res = select(obj, ["a", "b", "c"]);
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, "val1");
+    });
     test('select(obj, "a.b.x"); // => undefined', function () {
       const res = select(obj, "a.b.x");
       //console.info("=>" + JSON.stringify(res, null, 4));
@@ -77,11 +82,17 @@ suite('easy-object-selector', function () {
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, true);
     });
+    test('has(obj, ["a", "b", "c"]); // => true', function () {
+      const res = has(obj, ["a", "b", "c"]);
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res, true);
+    });
     test('has(obj, "a.b.x"); // => false', function () {
       const res = has(obj, "a.b.x");
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
     });
+
     // wrapper
     test('wrapper.has("a.b.x"); // => false', function () {
       const res = wrapper.has("a.b.x");
@@ -89,4 +100,24 @@ suite('easy-object-selector', function () {
       assert.equal(res, false);
     });
   });
+   suite('#put()', function () {
+      test('put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}', function () {
+        const res = selector.put({}, "a.b.c", "val1");
+        //console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res.a.b.c, "val1");
+      });
+      test('put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}', function () {
+          const res = selector.put({}, ["a", "b", "c"], "val1");
+          //console.info("=>" + JSON.stringify(res, null, 4));
+          assert.equal(res.a.b.c, "val1");
+      });
+
+      // wrapper
+      test('wrapper.put("a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
+        const wrapper = selector.wrap({});
+        const res = wrapper.put("a.b.c", "val1");
+        //console.info("=>" + JSON.stringify(res, null, 4));
+        assert.equal(res.a.b.c, "val1");
+      });
+   });
 });
