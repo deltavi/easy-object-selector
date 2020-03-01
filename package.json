@@ -1,6 +1,6 @@
 {
   "name": "easy-object-selector",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Utility to manage an object property using simple 'a.b.c' paths.",
   "main": "index.js",
   "scripts": {
