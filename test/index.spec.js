@@ -274,9 +274,9 @@ suite('easy-object-selector', function () {
       assert.equal(res.z, 1);
     });
     test('const o = {}; put(o, "a.b.c", "val1"); put(o, "a.d.f", "val2"); should return {a:{b:{c:"val1"}, d:{f:"val2"}}}', function () {
-      const o = {}; 
+      const o = {};
       selector.put(o, "a.b.c", "val1");
-      const res =  selector.put(o, "a.d.f", "val2");
+      const res = selector.put(o, "a.d.f", "val2");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res.a.b.c, "val1");
       assert.equal(res.a.d.f, "val2");

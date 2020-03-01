@@ -155,9 +155,9 @@ exports.put = function (obj, selector, value) {
 	var parts = Array.isArray(selector) ? selector : selector.split(".");
 	for (var i = 0; i < parts.length; i++) {
 		part = parts[i];
-		if(i === parts.length - 1){
+		if (i === parts.length - 1) {
 			obj[part] = value;
-		} else if(!obj[part]){
+		} else if (!obj[part]) {
 			obj[part] = {};
 		}
 		obj = obj[part];
@@ -236,7 +236,7 @@ ObjectWrapper.prototype.has = function (selector) {
 };
 
 /**
- * Put the value in the object property
+ * Put the value in the object property.
  * @param {String|Array} selector selector
  * @param {Object|Array|String|Number|Boolean} value value
  * @returns {Object}

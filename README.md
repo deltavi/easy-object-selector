@@ -288,7 +288,7 @@ Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### put
 
-Put the value in the object property
+Put the value in the object property.
 
 #### Parameters
 

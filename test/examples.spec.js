@@ -100,24 +100,24 @@ suite('easy-object-selector', function () {
       assert.equal(res, false);
     });
   });
-   suite('#put()', function () {
-      test('put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}', function () {
-        const res = selector.put({}, "a.b.c", "val1");
-        //console.info("=>" + JSON.stringify(res, null, 4));
-        assert.equal(res.a.b.c, "val1");
-      });
-      test('put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}', function () {
-          const res = selector.put({}, ["a", "b", "c"], "val1");
-          //console.info("=>" + JSON.stringify(res, null, 4));
-          assert.equal(res.a.b.c, "val1");
-      });
+  suite('#put()', function () {
+    test('put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}', function () {
+      const res = selector.put({}, "a.b.c", "val1");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+    });
+    test('put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}', function () {
+      const res = selector.put({}, ["a", "b", "c"], "val1");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+    });
 
-      // wrapper
-      test('wrapper.put("a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
-        const wrapper = selector.wrap({});
-        const res = wrapper.put("a.b.c", "val1");
-        //console.info("=>" + JSON.stringify(res, null, 4));
-        assert.equal(res.a.b.c, "val1");
-      });
-   });
+    // wrapper
+    test('wrapper.put("a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
+      const wrapper = selector.wrap({});
+      const res = wrapper.put("a.b.c", "val1");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.a.b.c, "val1");
+    });
+  });
 });
