@@ -143,8 +143,10 @@ exports.has = function (obj, selector) {
  * @example
  * const selector = require("easy-object-selector");
  * const put = selector.put;
- * put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
- * put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}
+ * const o = {};
+ * put(o, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
+ * const o2 = {};
+ * put(o2, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}
  */
 exports.put = function (obj, selector, value) {
 	if (!obj) {
@@ -242,7 +244,8 @@ ObjectWrapper.prototype.has = function (selector) {
  * @returns {Object}
  * @example
  * const selector = require("easy-object-selector");
- * const wrapper = selector.wrap({});
+ * const o = {};
+ * const wrapper = selector.wrap(o);
  * wrapper.put("a.b.c", "val1") // => {a:{b:{c:"val1"}}}
  */
 ObjectWrapper.prototype.put = function (selector, value) {

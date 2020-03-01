@@ -51,13 +51,15 @@ const has = selector.has;
 has(obj, "a.b.c"); // => true
 
 const put = selector.put;
-put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
+const o = {};
+put(o, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
 
 const wrapper = selector.wrap(obj);
 wrapper.get("a.b.c"); // => "val1"
 wrapper.has("a.b.c"); // => true
 
-const wrapper2 = selector.wrap({});
+const o2 = {};
+const wrapper2 = selector.wrap(o2);
 wrapper2.put("a.b.c", "val1"); // => {a:{b:{c:"val1"}}}
 ```
 
@@ -177,8 +179,10 @@ Put the value in the object property.
 ```javascript
 const selector = require("easy-object-selector");
 const put = selector.put;
-put({}, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
-put({}, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}
+const o = {};
+put(o, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
+const o2 = {};
+put(o2, ["a", "b", "c"], "val1") // => {a:{b:{c:"val1"}}}
 ```
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
@@ -299,7 +303,8 @@ Put the value in the object property.
 
 ```javascript
 const selector = require("easy-object-selector");
-const wrapper = selector.wrap({});
+const o = {};
+const wrapper = selector.wrap(o);
 wrapper.put("a.b.c", "val1") // => {a:{b:{c:"val1"}}}
 ```
 
