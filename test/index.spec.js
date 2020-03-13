@@ -249,6 +249,32 @@ suite('easy-object-selector', function () {
       assert.equal(res, false);
     });
   });
+  suite('#keys()', function () {
+    test('keys(obj, "t6") should return ["a1", "a2"]', function () {
+      const res = selector.keys(obj, "t6");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 2);
+      assert.equal(res[0], "a1");
+      assert.equal(res[1], "a2");
+    });
+    test('keys(obj, "tz") should return []', function () {
+      const res = selector.keys(obj, "tz");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 0);
+    });
+    test('keys(null, "tz") should return []', function () {
+      const res = selector.keys(null, "tz");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 0);
+    });
+    test('keys(obj, "tz") should return ["a", "b"]', function () {
+      const res = selector.keys(obj, "tz", ["a", "b"]);
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 2);
+      assert.equal(res[0], "a");
+      assert.equal(res[1], "b");
+    });
+  });
   suite('#put()', function () {
     test('put({}, "a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
       const res = selector.put({}, "a.b.c", "val1");
@@ -308,6 +334,13 @@ suite('easy-object-selector', function () {
       const res = wrapper.has("b.0.x");
       console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
+    });
+    test('wrapper.keys("t6") should return ["a1", "a2"]', function () {
+      const res = wrapper.keys("t6");
+      console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 2);
+      assert.equal(res[0], "a1");
+      assert.equal(res[1], "a2");
     });
     test('wrapper.put("a.b.c", "val1") should return {a:{b:{c:"val1"}}}', function () {
       const wrapper = selector.wrap({});

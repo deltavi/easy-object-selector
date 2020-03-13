@@ -19,6 +19,7 @@ const obj = {
 const wrapper = selector.wrap(obj);
 const select = selector.select;
 const has = selector.has;
+const keys = selector.keys;
 suite('easy-object-selector', function () {
   suite('#select()', function () {
     test('select(obj, "a.b.c"); // => "val1"', function () {
@@ -98,6 +99,56 @@ suite('easy-object-selector', function () {
       const res = wrapper.has("a.b.x");
       //console.info("=>" + JSON.stringify(res, null, 4));
       assert.equal(res, false);
+    });
+  });
+  suite('#keys()', function () {
+    const obj = {
+      a: {
+        b: {
+          c: "val1",
+          d: "val2",
+          e: "val3",
+        }
+      }
+    };
+    const wrapper = selector.wrap(obj);
+    test('keys(obj, "a.b"); // => ["c", "d", "e"]', function () {
+      const res = keys(obj, "a.b");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 3);
+      assert.equal(res[0], "c");
+      assert.equal(res[1], "d");
+      assert.equal(res[2], "e");
+    });
+    test('keys(obj, ["a", "b"]); // => ["c", "d", "e"]', function () {
+      const res = keys(obj, ["a", "b"]);
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 3);
+      assert.equal(res[0], "c");
+      assert.equal(res[1], "d");
+      assert.equal(res[2], "e");
+    });
+    test('keys(obj, "a.b.x"); // => []', function () {
+      const res = keys(obj, "a.b.x");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 0);
+    });
+    test('keys(obj, "a.b.x", ["a", "b"]); // => ["a", "b"]', function () {
+      const res = keys(obj, "a.b.x", ["a", "b"]);
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 2);
+      assert.equal(res[0], "a");
+      assert.equal(res[1], "b");
+    });
+
+    // wrapper
+    test('wrapper.keys("a.b"); // => ["c", "d", "e"]', function () {
+      const res = wrapper.keys("a.b");
+      //console.info("=>" + JSON.stringify(res, null, 4));
+      assert.equal(res.length, 3);
+      assert.equal(res[0], "c");
+      assert.equal(res[1], "d");
+      assert.equal(res[2], "e");
     });
   });
   suite('#put()', function () {

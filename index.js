@@ -135,6 +135,37 @@ exports.has = function (obj, selector) {
 };
 
 /**
+ * Returns an array of keys.
+ * @param {Object} obj source object
+ * @param {String|Array} selector selector
+ * @param {Array} defKeys default keys array
+ * @returns {Array}
+ * @example
+ * const selector = require("easy-object-selector");
+ * const keys = selector.keys;
+ * const obj = {
+ *      a : {
+ *          b : {
+ *              c: "val1",
+ *              d: "val2",
+ *              e: "val3",
+ *          }
+ *      }
+ * };
+ * keys(obj, "a.b"); // => ["c", "d", "e"]
+ * keys(obj, ["a", "b"]); // => ["c", "d", "e"]
+ * keys(obj, "a.b.x"); // => []
+ * keys(obj, "a.b.x", ["a", "b"]); // => ["a", "b"]
+ */
+exports.keys = function (obj, selector, defKeys) {
+	var res = exports.select(obj, selector);
+	if (!res) {
+		return defKeys || [];
+	}
+	return Object.keys(res);
+};
+
+/**
  * Put the value in the object property.
  * @param {Object} obj source object
  * @param {String|Array} selector selector
@@ -235,6 +266,32 @@ ObjectWrapper.prototype.get = function (selector, defValue) {
  */
 ObjectWrapper.prototype.has = function (selector) {
 	return exports.has(this.obj, selector);
+};
+
+/**
+ * Returns an array of keys.
+ * @param {String|Array} selector selector
+ * @param {Array} defKeys default keys array
+ * @returns {Array}
+ * @example
+ * const selector = require("easy-object-selector");
+ * const obj = {
+ *      a : {
+ *          b : {
+ *              c: "val1",
+ *              d: "val2",
+ *              e: "val3",
+ *          }
+ *      }
+ * };
+ * const wrapper = selector.wrap(obj);
+ * wrapper.keys("a.b"); // => ["c", "d", "e"]
+ * wrapper.keys(["a", "b"]); // => ["c", "d", "e"]
+ * wrapper.keys("a.b.x"); // => []
+ * wrapper.keys("a.b.x", ["a", "b"]); // => ["a", "b"]
+ */
+ObjectWrapper.prototype.keys = function (selector, defKeys) {
+	return exports.keys(this.obj, selector, defKeys);
 };
 
 /**

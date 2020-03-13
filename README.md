@@ -50,6 +50,9 @@ select(obj, "a.d.last().e"); // => "val3"
 const has = selector.has;
 has(obj, "a.b.c"); // => true
 
+const keys = selector.keys;
+keys(obj, "a"); // => ["b", "d"]
+
 const put = selector.put;
 const o = {};
 put(o, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
@@ -57,6 +60,7 @@ put(o, "a.b.c", "val1") // => {a:{b:{c:"val1"}}}
 const wrapper = selector.wrap(obj);
 wrapper.get("a.b.c"); // => "val1"
 wrapper.has("a.b.c"); // => true
+wrapper.keys("a"); // => ["b", "d"]
 
 const o2 = {};
 const wrapper2 = selector.wrap(o2);
@@ -75,23 +79,29 @@ wrapper2.put("a.b.c", "val1"); // => {a:{b:{c:"val1"}}}
 -   [has](#has)
     -   [Parameters](#parameters-1)
     -   [Examples](#examples-1)
--   [put](#put)
+-   [keys](#keys)
     -   [Parameters](#parameters-2)
     -   [Examples](#examples-2)
--   [wrap](#wrap)
+-   [put](#put)
     -   [Parameters](#parameters-3)
     -   [Examples](#examples-3)
--   [ObjectWrapper](#objectwrapper)
+-   [wrap](#wrap)
     -   [Parameters](#parameters-4)
+    -   [Examples](#examples-4)
+-   [ObjectWrapper](#objectwrapper)
+    -   [Parameters](#parameters-5)
     -   [get](#get)
-        -   [Parameters](#parameters-5)
-        -   [Examples](#examples-4)
-    -   [has](#has-1)
         -   [Parameters](#parameters-6)
         -   [Examples](#examples-5)
-    -   [put](#put-1)
+    -   [has](#has-1)
         -   [Parameters](#parameters-7)
         -   [Examples](#examples-6)
+    -   [keys](#keys-1)
+        -   [Parameters](#parameters-8)
+        -   [Examples](#examples-7)
+    -   [put](#put-1)
+        -   [Parameters](#parameters-9)
+        -   [Examples](#examples-8)
 
 ## select
 
@@ -163,6 +173,38 @@ has(obj, "a.b.x"); // => false
 ```
 
 Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## keys
+
+Returns an array of keys.
+
+### Parameters
+
+-   `obj` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** source object
+-   `selector` **([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** selector
+-   `defKeys` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** default keys array
+
+### Examples
+
+```javascript
+const selector = require("easy-object-selector");
+const keys = selector.keys;
+const obj = {
+     a : {
+         b : {
+             c: "val1",
+             d: "val2",
+             e: "val3",
+         }
+     }
+};
+keys(obj, "a.b"); // => ["c", "d", "e"]
+keys(obj, ["a", "b"]); // => ["c", "d", "e"]
+keys(obj, "a.b.x"); // => []
+keys(obj, "a.b.x", ["a", "b"]); // => ["a", "b"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
 
 ## put
 
@@ -289,6 +331,37 @@ wrapper.has("a.b.x"); // => false
 ```
 
 Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### keys
+
+Returns an array of keys.
+
+#### Parameters
+
+-   `selector` **([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** selector
+-   `defKeys` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** default keys array
+
+#### Examples
+
+```javascript
+const selector = require("easy-object-selector");
+const obj = {
+     a : {
+         b : {
+             c: "val1",
+             d: "val2",
+             e: "val3",
+         }
+     }
+};
+const wrapper = selector.wrap(obj);
+wrapper.keys("a.b"); // => ["c", "d", "e"]
+wrapper.keys(["a", "b"]); // => ["c", "d", "e"]
+wrapper.keys("a.b.x"); // => []
+wrapper.keys("a.b.x", ["a", "b"]); // => ["a", "b"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
 
 ### put
 
