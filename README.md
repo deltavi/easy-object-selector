@@ -1,6 +1,4 @@
-# ![easy-object-selector](docs/easy-object-selector.png) Easy Object Selector [![Build Status](https://travis-ci.org/deltavi/easy-object-selector.svg?branch=master)](https://travis-ci.org/deltavi/easy-object-selector)
-
-![easy-object-selector](https://img.shields.io/npm/dt/easy-object-selector)
+# ![easy-object-selector](docs/easy-object-selector.png) Easy Object Selector [![Build Status](https://travis-ci.org/deltavi/easy-object-selector.svg?branch=master)](https://travis-ci.org/deltavi/easy-object-selector) ![easy-object-selector](https://img.shields.io/npm/dt/easy-object-selector)
 
 Utility to manage an object property using simple 'a.b.c' paths (with dot–notation).
 
